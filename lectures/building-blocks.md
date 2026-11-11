@@ -79,12 +79,7 @@ This is where the blockchain came in for the first time. But the ideas behind th
 
 Hash functions take any string as input, return a fixed-size string as output, and are fast to compute. For example, if $H$ is SHA-256
 
-```mermaid
-flowchart LR
-    I1["Fox"] -- "$$H$$" --> D1["f55bd2cdfae7972827638f3691a5bc18<br>9199d7cff7188d5ead489afdea0e5403"]
-    I2["The red fox jumps <b>over</b> the blue dog"] -- "$$H$$" --> D2["12d6ae1b4a5c1c99ba6e4d60c22c42ab<br>e56d0e08b3111222880606a12a9b5aab"]
-    I3["The red fox jumps <b>ouer</b> the blue dog"] -- "$$H$$" --> D3["145fc9ac382dd6b4e7c012f6c9ec3dd0<br>3bdb0565f65d6c0c59f83b166c4f1c98"]
-```
+![Hash function examples](images/hash-examples.drawio.svg)
 
 ### 2.1. Security properties
 
@@ -100,28 +95,19 @@ Therefore, if $H(x) = H(y)$, then it is safe to assume that $x = y$.
 > [!info] Hiding (simplified)
 > Given $H(x)$, it is infeasible to find $x$.
 
-```mermaid
-flowchart LR
-    X1["$$x$$"] -- "$$H$$ (fast)" --> D["$$H(x)$$"]
-    D -. "??? (infeasible)" .-> X2["$$x$$"]
-```
+![Hiding](images/hash-hiding.drawio.svg)
 
-`???` stands for the missing inverse: since many inputs map to the same output (collisions do exist), $H$ has no inverse function.
+> [!warning]
+> Hiding holds only if $x$ is hard to guess. If $x$ comes from a small set of values, say `yes` or `no`, anyone can hash every value and compare the results with $H(x)$.
 
 ---
 
 > [!info] Puzzle friendliness (simplified)
 > There is no solving strategy that is more effective than simply trying random values from a set of possible solutions until one of them works.
 
-Suppose you need an $x$ whose $H(x)$ meets some target. For example, $H(x)$ must start with `000`. The only way is to try the possible inputs $x_1, \dots, x_n$ one after another until some $x_k$, with $1 \leq k \leq n$, works.
+Suppose you need an $x$ whose $H(x)$ meets some target. For example, $H(x)$ must start with `000`. The only way is to try one input after another until one works. Trying `Fox 1`, `Fox 2`, and so on, the first hash that starts with `000` comes from `Fox 11667`
 
-```mermaid
-flowchart TB
-    X1["$$x_1$$"] -- "$$H$$" --> M1["✗"]
-    X2["$$x_2$$"] -- "$$H$$" --> M2["✗"]
-    X3["$$\dots$$"] -- "$$H$$" --> M3["$$\dots$$"]
-    X4["$$x_k$$"] -- "$$H$$" --> W["✓"]
-```
+![Puzzle friendliness](images/hash-puzzle.drawio.svg)
 
 ## 3. Hash pointers
 
@@ -170,11 +156,16 @@ We can detect that something is not as expected from the head. The adversary can
 
 ### 3.2. Merkle trees
 
-A binary tree with hash pointers is called a Merkle tree, after Ralph Merkle, who invented it. Merkle trees have the following characteristics
+> [!info] Merkle tree
+> A binary tree with hash pointers.
+
+Merkle trees are named after Ralph Merkle, who invented them. They have the following characteristics
 
 - Tamper-evident
 - Membership verification in logarithmic time
 - If sorted, non-membership verification
+
+---
 
 ![Merkle tree](images/merkle-tree.drawio.svg)
 
@@ -281,8 +272,7 @@ Consensus is how the nodes of a distributed system come to agree on a single val
 > [!example]
 > A distributed database records what happens on a social network. A new comment comes in.
 
-> [!question]
-> What could happen to the copies of the database?
+> [!question] What could happen to the copies of the database?
 > - Some of the copies record the comment, others do not
 > - All of the copies record the comment
 > - None of the copies record the comment
@@ -327,8 +317,7 @@ The nodes agree on $y$, which becomes $V_5$
 
 ---
 
-> [!warning]
-> What could possibly go wrong?
+> [!warning] What could possibly go wrong?
 > - Nodes may crash
 > - Nodes may be malicious
 > - The network may get partitioned, that is, some nodes cannot reach some others
