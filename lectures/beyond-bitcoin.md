@@ -67,7 +67,7 @@ Ethereum uses the same [cryptographic building blocks](building-blocks.md) as Bi
 > - Enough time and memory
 > - The necessary instructions
 >
-> can solve any computational problem, no matter how complex.
+> can solve any computable problem, no matter how complex.
 
 > [!info] Smart contract (Ethereum, 2014)
 > A program that lives on the blockchain.
@@ -138,13 +138,13 @@ Every node runs every transaction, so a loop that runs forever would stall the E
 | -------------------------------------------------------- | ---------- |
 | Addition                                                 | 3          |
 | Writing a word to the internal state of a smart contract | 20,000     |
-| Every transaction                                        | 21,000     |
+| Base cost of a transaction                               | 21,000     |
 
 A loop that runs forever eventually runs out of gas.
 
 ---
 
-The fee of a transaction is
+The transaction fee is
 
 $$\text{fee} = \text{gas used} \times (\text{base fee} + \text{priority fee})$$
 
@@ -211,13 +211,13 @@ The merge cut the electricity consumption of Ethereum by about 99.99%, from abou
 
 ---
 
-BTC has a fixed monetary policy, with a creation rate designed to be [deflationary](bitcoin.md#42-block-reward).
+Bitcoin has a fixed supply cap, designed to keep BTC scarce.
 
 > [!example]
 > On 22 May 2010, Laszlo Hanyecz paid 10,000 BTC for two pizzas, worth about 41 USD at the time. In May 2025, those coins were worth about 1.1 billion USD.
 
-> [!warning] Not fit for purpose: deflationary
-> The only rational behavior is to never spend a deflationary currency. Otherwise, eternal regret.
+> [!warning] Not fit for purpose: incentive to hold
+> A currency expected to gain value gives people an incentive to hold on to it as long as possible rather than spend it. Otherwise, eternal regret.
 
 ### 3.2. Selfish mining
 
@@ -338,7 +338,7 @@ function withdraw(uint amount) {
 Bitcoin was proposed as a payment system [based on cryptographic proof instead of trust](building-blocks.md#14-nakamotos-ambition). However, trust has to happen somewhere.
 
 > [!example]
-> The DAO bug (see [§3.3](#33-the-dao)) was in the code. To fix it, the community agreed on a hard fork, which is a new version of the software written by its developers.
+> The DAO bug (see [§3.3](#33-the-dao)) was in the code. To fix it, most of the community adopted a hard fork, implemented in a new version of the software written by its developers.
 
 > [!warning] Blockchains are not trustless
 > You trust the code, the people who maintain it, and the community.
@@ -363,7 +363,7 @@ Proof of stake uses a tiny fraction of that electricity (see [§2.4](#24-proof-o
 > [!warning] The vicious cycle
 > Mining needs computing power, and thus energy.
 >
-> ASICs supercharge mining, mining becomes more profitable, and more miners join the game. The more miners, the more computing power, and the cycle begins anew.
+> ASICs let miners perform more hashes for the same electricity. When mining is profitable, more miners buy ASICs and join the game. The more miners, the more computing power, and the cycle begins anew.
 >
 > More miners do not produce more blocks, because the [target space](bitcoin.md#51-hash-puzzles) is recalculated to keep one block every 10 minutes. The extra energy only buys more competition.
 
@@ -387,10 +387,10 @@ One way to resist ASICs is to make the hash puzzle memory hard, i.e., limited by
 
 ![ASICs are copies of the same circuit](images/asic-copies.drawio.svg)
 
-> [!warning] Secret hardware is unlikely
-> An ASIC is just many copies of the same SHA-2 circuit, and a cheap and an expensive ASIC only differ in the number of copies.
+> [!warning] A secret breakthrough is unlikely
+> Typically, an expensive ASIC has more copies of the SHA-2 circuit than a cheap one (circuit design and efficiency matter too).
 >
-> To mine faster, you need more copies, i.e., more money, not secret hardware. A breakthrough that computes proof of work much faster seems unlikely.
+> Faster mining generally requires more or better hardware, i.e., more money. A breakthrough that makes proof of work much faster seems unlikely.
 
 ## 4. Wrap-up
 
@@ -415,7 +415,7 @@ One way to resist ASICs is to make the hash puzzle memory hard, i.e., limited by
 | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Who can publish blocks                                             | Anyone                                                                                                                                                                                                                                                  | Only parties authorized by some authority                                                                                                                                                                                                                                                                                       |
 | Who can read and write the [ledger](building-blocks.md#11-ledgers) | Anyone                                                                                                                                                                                                                                                  | A policy specifies who can read, write, or both                                                                                                                                                                                                                                                                                 |
-| Consensus model                                                    | Requires expending resources ([proof of work](bitcoin.md#5-proof-of-work)) or maintaining resources ([proof of stake](#24-proof-of-stake)), and [rewards non-malicious behavior](bitcoin.md#4-incentives) with a native cryptocurrency (e.g., BTC, ETH) | Often [Byzantine fault tolerant](building-blocks.md#53-the-state-of-the-art-before-bitcoin). It often does not require the expense or maintenance of resources, because [the identities of the authorized parties are known](building-blocks.md#42-sybil-attacks), so it is typically faster and less computationally expensive |
+| Consensus model                                                    | Often requires expending resources ([proof of work](bitcoin.md#5-proof-of-work)) or maintaining resources ([proof of stake](#24-proof-of-stake)), and usually [rewards non-malicious behavior](bitcoin.md#4-incentives) with a native cryptocurrency (e.g., BTC, ETH) | Often [Byzantine fault tolerant](building-blocks.md#53-the-state-of-the-art-before-bitcoin). It often does not require the expense or maintenance of resources, because [the identities of the authorized parties are known](building-blocks.md#42-sybil-attacks), so it is typically faster and less computationally expensive |
 | Software                                                           | Usually open source                                                                                                                                                                                                                                     | Both open source and closed source                                                                                                                                                                                                                                                                                              |
 
 ### 4.3. Consensus models
@@ -443,7 +443,6 @@ One way to resist ASICs is to make the hash puzzle memory hard, i.e., limited by
 | Ether (ETH)                                    | The built-in currency of Ethereum                                                                                                                                                 |
 | Ethereum 1.0                                   | Ethereum before the merge, when it used proof of work                                                                                                                             |
 | Gas                                            | The unit that measures computation in Ethereum. Each instruction costs a fixed amount of gas                                                                                      |
-| Hard fork                                      | A change to the rules of a blockchain that nodes running the old rules do not accept, so that the chain may split                                                                 |
 | Memory-hard hash puzzle                        | A hash puzzle limited by how fast memory can be accessed rather than by how fast hashes can be computed                                                                           |
 | Merge                                          | The switch of Ethereum from proof of work to proof of stake, on 15 September 2022                                                                                                 |
 | Mining pool                                    | A group of miners that all contribute to the solution of hash puzzles and share the rewards in proportion to their contributions                                                  |
@@ -454,8 +453,8 @@ One way to resist ASICs is to make the hash puzzle memory hard, i.e., limited by
 | Re-entrant call                                | A call that runs a function again before its previous run is over                                                                                                                 |
 | Selfish mining                                 | A strategy in which a mining pool keeps the blocks that it finds secret, and reveals them when the public chain approaches its private chain in length                            |
 | Smart contract                                 | A set of promises, specified in digital form, including protocols within which the parties perform on these promises (Szabo). In Ethereum, a program that lives on the blockchain |
-| Turing-complete machine                        | A machine that, given enough time and memory, can solve any computational problem                                                                                                 |
-| Virtual mining                                 | Using the money that would have been spent on mining rigs directly within the system, without any computational work                                                              |
+| Turing-complete machine                        | A machine that, given enough time and memory, can solve any computable problem                                                                                                    |
+| Virtual mining                                 | Mining in which the weight of a node depends on the cryptocurrency it stakes, not on its computing power                                                                          |
 | Wei                                            | The smallest unit of ether, $1 \text{ ETH} = 10^{18}$ wei                                                                                                                         |
 | Word                                           | A 256-bit (32-byte) piece of data, the unit that Ethereum computes with                                                                                                           |
 
