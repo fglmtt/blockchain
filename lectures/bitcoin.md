@@ -118,7 +118,7 @@ Bitcoin's ledger of transactions is a [hash chain of blocks](building-blocks.md#
 
 ## 2. The Bitcoin network
 
-The Bitcoin network is an overlay peer-to-peer network over the Internet
+The Bitcoin network is a peer-to-peer overlay network on the Internet
 
 ![Bitcoin network](images/bitcoin-network.drawio.svg)
 
@@ -234,7 +234,7 @@ If the next block happens to be proposed by Alice, she can attempt a [double-spe
 
 ---
 
-Whether the double-spending attack is going to succeed depends on which transaction ends up in the long-term consensus chain
+Whether the double-spending attack succeeds depends on which transaction ends up in the long-term consensus chain
 
 > [!note]
 > The long-term consensus chain is the chain that honest nodes eventually agree on. When the chain forks, honest nodes end up building on only one branch, and the blocks in the other branch are ignored.
@@ -303,7 +303,7 @@ No single node has authority over which transactions are valid. Instead,
 ---
 
 > [!failure] No, nodes do not have real identities
-> A node is just a public key (see [public keys as identities](building-blocks.md#41-public-keys-as-identities)), and anyone can create a new one at any time (pseudonymity).
+> Anyone can create a new public key at any time. The Bitcoin protocol does not check who is behind it, although others may sometimes find out (pseudonymity).
 >
 > Also, the protocol cannot take coins away from a public key: only the owner of the secret key can sign a transaction that spends them (see [§3.1](#31-stealing-coins)).
 
@@ -359,9 +359,9 @@ In the simplified consensus protocol (see [§2.2](#22-simplified-consensus)), a 
 
 - There is no central authority
 - Anyone can participate
-- [Public keys work as identities](building-blocks.md#41-public-keys-as-identities)
+- Participants can be pseudonymous
 
-> [!question] How to decide who is going to propose the next block?
+> [!question] How do we decide who proposes the next block?
 
 ---
 
@@ -375,7 +375,7 @@ In the simplified consensus protocol (see [§2.2](#22-simplified-consensus)), a 
 ---
 
 > [!success] Choice weighted by computing power
-> The more computing power a node has, the more likely it is to propose the next block. Creating many identities does not give more computing power, so Sybil attacks do not work.
+> The more computing power a node has, the more likely it is to propose the next block. Creating many identities does not increase a miner's hash power, so it does not increase their chance of proposing the next block.
 
 > [!info] Proof of work
 > Nodes compete with each other using their computing power to propose the next block.
@@ -406,6 +406,8 @@ The probability that someone creates the next block is the fraction of the globa
 
 Mining is what actually happens at step 3 of the consensus protocol (see [§2.2](#22-simplified-consensus)). The protocol in §2.2 is simplified precisely because it assumes that someone can pick a random node.
 
+In Bitcoin, miners hash the block header, which contains the Merkle root of the transactions. The long-term consensus chain is the valid chain with the most cumulative proof of work. It is usually the longest chain.
+
 ---
 
 > [!warning] Security assumption
@@ -435,7 +437,7 @@ Ethereum is based on proof of stake.
 | Block reward                                         | The new coins that the creator of a block gets through the coinbase transaction                                                |
 | Client                                               | A user who submits transactions to a node, without maintaining the ledger                                                      |
 | Coinbase transaction (aka coin-creation transaction) | The transaction in a block that creates new coins and sends them to the creator of the block                                   |
-| Confirmations                                        | The number of blocks from the block that includes a transaction to the end of the chain, both included                         |
+| Confirmations                                        | The number of blocks from the one containing a transaction to the end of the chain, both included                                |
 | Double-spending attack                               | An attack in which someone spends the same coins twice by getting a conflicting transaction into the long-term consensus chain |
 | Gossip protocol (aka flooding)                       | A protocol in which every node that has news tells as many other nodes as it can, which do the same, and so on                 |
 | Halving                                              | The event, every 210,000 blocks, in which the block reward is cut in half                                                      |
@@ -448,7 +450,7 @@ Ethereum is based on proof of stake.
 | Overlay network                                      | A network built on top of another network, such as the Internet                                                                |
 | Pool of pending transactions (aka mempool)           | The list of transactions that a node has heard about, but that have not been put into the ledger yet                           |
 | Proof of work                                        | A way to pick nodes in proportion to their computing power, by making them solve hash puzzles                                  |
-| Stale block (aka orphan block)                       | A valid block that is not part of the longest chain                                                                            |
+| Stale block                                          | A valid block that is not part of the current consensus chain                                                                  |
 | Target space                                         | The part of the output space of the hash function that a block hash must fall within                                           |
 | Transaction fee                                      | The difference between the inputs and the outputs of a transaction, which goes to the creator of the block                     |
 | Transaction-based ledger                             | A ledger with no accounts, in which every transaction consumes outputs of earlier transactions and creates new ones            |
