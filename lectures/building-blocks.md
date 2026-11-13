@@ -54,7 +54,7 @@ Financial institutions act as trusted third parties to process electronic paymen
 - Prevent double spending (see [§1.3](#13-the-double-spending-problem))
 - Are a single point of failure
 - Mediate disputes
-    - Non-reversible transactions are not really possible
+    - Irreversible transactions are not really possible
     - Mediation comes with a cost
 
 ### 1.3. The double-spending problem
@@ -68,12 +68,12 @@ Nobody wants a monetary system in which anyone can duplicate their money at will
 
 ### 1.4. Nakamoto's ambition
 
-In 2008, Satoshi Nakamoto (whoever they may be) proposed a peer-to-peer electronic cash system based on cryptographic proof instead of trust that solves the double-spending problem, where
+In 2008, Satoshi Nakamoto (whoever they may be) proposed a peer-to-peer electronic cash system based on cryptographic proof instead of trust that solves the double-spending problem. In this system
 
 - Any two willing parties can transact directly with one another
 - Transactions are computationally impractical to reverse
 
-This is where the blockchain came in for the first time. But the ideas behind the blockchain were around for decades...
+Bitcoin was the first cryptocurrency to use a blockchain. But the ideas behind blockchains had been around for decades...
 
 ## 2. Hash functions
 
@@ -171,11 +171,11 @@ Merkle trees are named after Ralph Merkle, who invented them. They have the foll
 
 ---
 
-Suppose someone wants to prove that a data block is in the tree. We just remember the head, as in the previous example. Then, they only need to send us the nodes on the path from the data block to the root
+Suppose someone wants to prove that a data block is in the tree. We just remember the head, as in the previous example. Then, they only need to send us the data block and the sibling hashes along the path to the root
 
 ![Membership proof](images/merkle-proof.drawio.svg)
 
-With 8 data blocks, the path has 3 nodes. In general, with $n$ data blocks, the path has about $\log_2 n$ nodes.
+With 8 data blocks, the proof needs 3 sibling hashes. In general, with $n$ data blocks, it needs about $\log_2 n$ hashes.
 
 ---
 
@@ -230,7 +230,7 @@ where
 
 ### 4.1. Public keys as identities
 
-In practice, the identity is the hash of `pk`.
+Typically, the identity is either `pk` or a hash of `pk`.
 
 Public keys as identities give pseudonymity: nobody forces users to disclose real-life information.
 
@@ -290,28 +290,32 @@ Consensus is how the nodes of a distributed system come to agree on a single val
 
 ### 5.2. The consensus problem
 
-Let us assume there are $N$ nodes, each with some input value. When the consensus protocol terminates
+Consider a distributed system with $N$ nodes, each with an input value. A consensus protocol must ensure that
 
+- All correct nodes eventually decide
 - All correct nodes decide on the same value
-- The value they agreed on must have been proposed by a correct node
+- If all correct nodes propose the same value, that value is chosen
 
 Nodes that are not correct might be faulty or even malicious.
 
 ---
 
-Let us assume there are 3 correct nodes in the system, and they already agreed on a distributed data structure
+> [!example]
+> There are 3 correct nodes in the system, and they have already agreed on a distributed data structure
 
 ![Nodes that already agreed on a data structure](images/consensus-1.drawio.svg)
 
 ---
 
-Then, $N_1$, $N_2$, and $N_3$ propose a value, broadcasting it to the others
+> [!example]
+> Then, $N_1$, $N_2$, and $N_3$ propose a value, broadcasting it to the others
 
 ![Nodes proposing a value](images/consensus-2.drawio.svg)
 
 ---
 
-The nodes agree on $y$, which becomes $V_5$
+> [!example]
+> The nodes agree on $y$, which becomes $V_5$
 
 ![Nodes that agreed on one of the proposed values](images/consensus-3.drawio.svg)
 
@@ -331,12 +335,12 @@ The nodes agree on $y$, which becomes $V_5$
 There are many impossibility results. Two of the best known are
 
 > [!info] Byzantine generals problem
-> Nodes (generals) must agree on a plan, but some of them are malicious (traitors). If messages are not signed, agreement is impossible when a third or more of the nodes are malicious.
+> Nodes (generals) must agree on a plan, but some of them are malicious (traitors). With reliable, synchronous communication and unsigned messages, agreement is impossible when a third or more of the nodes are malicious.
 
 > [!info] Fischer-Lynch-Paterson impossibility result
 > In an asynchronous system, no deterministic protocol can guarantee consensus if even a single node may crash.
 
-A few tried anyway, making compromises. For example, Paxos never produces an inconsistent result, but it might fail to make any progress.
+A few tried anyway, making compromises. For example, Paxos never produces an inconsistent result under crash failures, but it might fail to make any progress.
 
 ## Glossary
 
