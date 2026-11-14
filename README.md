@@ -41,7 +41,7 @@ Recordings will be made available **after** the lectures.
 | 1   | [Building blocks](https://github.com/fglmtt/blockchain/blob/main/lectures/building-blocks.md) |              |
 | 2   | [Bitcoin](https://github.com/fglmtt/blockchain/blob/main/lectures/bitcoin.md)                 |              |
 | 3   | [Beyond Bitcoin](https://github.com/fglmtt/blockchain/blob/main/lectures/beyond-bitcoin.md)   |              |
-| 4   | Hands-on                                                                                      | $\checkmark$ |
+| 4   | [Hands-on](https://github.com/fglmtt/blockchain/blob/main/lectures/hands-on.md)               | $\checkmark$ |
 
 ## Credits
 
