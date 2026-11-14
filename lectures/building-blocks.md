@@ -107,7 +107,7 @@ Therefore, if $H(x) = H(y)$, then it is safe to assume that $x = y$.
 
 Suppose you need an $x$ whose $H(x)$ meets some target. For example, $H(x)$ must start with `000`. The only way is to try one input after another until one works. Trying `Fox 1`, `Fox 2`, and so on, the first hash that starts with `000` comes from `Fox 11667`
 
-![Puzzle friendliness](images/hash-puzzle.drawio.svg)
+![Puzzle friendliness](images/puzzle-friendliness.drawio.svg)
 
 ## 3. Hash pointers
 
