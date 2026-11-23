@@ -1,5 +1,7 @@
 .obsidian/
 
+__pycache__/
+
 references/
 slides/
 
